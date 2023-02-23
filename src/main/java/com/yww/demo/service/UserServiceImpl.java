@@ -1,7 +1,9 @@
 package com.yww.demo.service;
 
 
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yww.demo.entity.User;
 import com.yww.demo.mapper.UserMapper;
@@ -60,9 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 .status(user.getStatus())
                 .build();
         // 可以进行一些操作校验数据，比如说username是唯一的等等
-        int count = baseMapper.insert(insertUser);
-        // this.save(insertUser);
-        return count > 0;
+        return this.save(insertUser);
     }
 
     @Override
@@ -78,20 +78,49 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public boolean insertBatch2(List<User> userList) {
         userList = UserUtil.getUsers(10);
-        return this.saveBatch(userList);
+        // 按每次500条数据进行插入
+        return saveBatch(userList, 500);
     }
 
     @Override
     public int insertBatch3(List<User> userList) {
-        userList = UserUtil.getUsers(10);
-        return this.baseMapper.insertBatchSomeColumn(userList);
+        userList = UserUtil.getUsers(1000);
+        // 按每次500条数据进行插入
+        List<List<User>> list = ListUtil.partition(userList, 500);
+        int res = 0;
+        for (List<User> i : list) {
+            res += this.baseMapper.insertBatchSomeColumn(i);
+        }
+        return res;
     }
 
     @Override
     public boolean deleteById(String userId) {
-//        this.removeById(userId);
-        this.baseMapper.deleteById(userId);
+//      有必要的话可以先查出数据，进行处理后在删除
+//      entity = select(userId);     this.removeById(entity)
+        this.removeById(userId);
         return false;
+    }
+
+    @Override
+    public boolean deleteByCondition(User user) {
+        return this.remove(Wrappers.lambdaQuery(user));
+    }
+
+    @Override
+    public boolean deleteByIds(List<String> userIds) {
+        // 按每次1000条数据进行操作
+        List<List<String>> list = ListUtil.partition(userIds, 1000);
+        boolean res = true;
+        for (List<String> i : list) {
+            res = res && this.removeByIds(i);
+        }
+        return this.removeByIds(userIds);
+    }
+
+    @Override
+    public boolean deleteBatchByIds(List<String> userIds) {
+        return this.removeBatchByIds(userIds, 1000);
     }
 
 }

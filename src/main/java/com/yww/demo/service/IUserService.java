@@ -63,4 +63,28 @@ public interface IUserService extends IService<User> {
      */
     boolean deleteById(String userId);
 
+    /**
+     * 根据条件删除数据
+     *
+     * @param user  实体条件
+     * @return      删除成功返回true
+     */
+    boolean deleteByCondition(User user);
+
+    /**
+     * 根据ID列表删除数据
+     *
+     * @param userIds 用户ID列表
+     * @return 删除成功返回true
+     */
+    boolean deleteByIds(List<String> userIds);
+
+    /**
+     * 根据ID列表批量删除数据
+     *
+     * @param userIds 用户ID列表
+     * @return 删除成功返回true
+     */
+    boolean deleteBatchByIds(List<String> userIds);
+
 }
