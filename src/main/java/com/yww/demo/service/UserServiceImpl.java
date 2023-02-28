@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Locale;
@@ -66,6 +67,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean insertBatch1(List<User> userList) {
         userList = UserUtil.getUsers(10);
         boolean res = true;
@@ -108,6 +110,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean deleteByIds(List<String> userIds) {
         // 按每次1000条数据进行操作
         List<List<String>> list = ListUtil.partition(userIds, 1000);
@@ -121,6 +124,48 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public boolean deleteBatchByIds(List<String> userIds) {
         return this.removeBatchByIds(userIds, 1000);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteBatchByUsernames(List<String> usernames) {
+        // 按每次1000条数据进行操作
+        List<List<String>> list = ListUtil.partition(usernames, 1000);
+        int count = 0;
+        for (List<String> i : list) {
+            count = count + baseMapper.deleteBatchByUsernames(i);
+        }
+        return count;
+    }
+
+    @Override
+    public boolean update1(User user) {
+        // 将名字设置为WHERE条件，将状态设置为SET语句
+        return this.update(
+            Wrappers.lambdaUpdate(User.class).eq(User::getNickname, user.getNickname())
+                    .set(User::getStatus, user.getStatus())
+        );
+    }
+
+    @Override
+    public boolean update2(User user) {
+        return this.update(user,
+                Wrappers.lambdaQuery(User.class).eq(User::getNickname, user.getNickname())
+        );
+    }
+
+    @Override
+    public User getByUsername(String username) {
+        return this.getOne(
+                Wrappers.lambdaQuery(User.class).eq(User::getUsername, username)
+        );
+    }
+
+    @Override
+    public List<User> getByUser(User user) {
+        return this.list(
+                Wrappers.lambdaQuery(User.class).eq(User::getUsername, user.getUsername()).eq(User::getNickname, user.getNickname())
+        );
     }
 
 }

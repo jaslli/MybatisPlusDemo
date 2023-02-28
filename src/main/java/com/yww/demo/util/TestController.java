@@ -41,9 +41,18 @@ public class TestController {
         Long start2 = System.currentTimeMillis();
         userService.deleteBatchByIds(list.get(1));
         Long end2 = System.currentTimeMillis();
-        log.info("此处测试的两种方法，测试删除的为{}", userIds.size() / 2);
+        log.info("此处测试的两种方法，测试删除的数据数量为{}", userIds.size() / 2);
         log.info("deleteByIds测试时间为{}毫秒", end1 - start1);
         log.info("deleteBatchByIds测试时间为{}毫秒", end2 - start2);
+    }
+
+
+    @Test
+    public void test() {
+        userService.update(
+                Wrappers.lambdaUpdate(User.class).eq(User::getNickname, "端木健雄")
+                        .set(User::getStatus, false)
+        );
     }
 
 }

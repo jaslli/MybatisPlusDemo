@@ -70,4 +70,11 @@ public class DeleteController {
         }
     }
 
+    @Operation(summary = "根据其他条件批量删除数据（用户名）")
+    @PostMapping("/deleteBatchByUsernames")
+    public Result<?> deleteBatchByUsernames(@RequestBody List<String> usernames) {
+        int count = service.deleteBatchByUsernames(usernames);
+        return Result.success("成功删除了" + count + "条数据");
+    }
+
 }

@@ -87,4 +87,43 @@ public interface IUserService extends IService<User> {
      */
     boolean deleteBatchByIds(List<String> userIds);
 
+    /**
+     * 根据其他条件批量删除数据
+     *
+     * @param usernames    用户名列表
+     * @return             返回受到影响的数据数量
+     */
+    int deleteBatchByUsernames(List<String> usernames);
+
+    /**
+     *使用UpdateWrapper更新数据
+     *
+     * @param user 条件和更新的值
+     * @return      更新成功返回true
+     */
+    boolean update1(User user);
+
+    /**
+     *使用Wrapper更新数据
+     *
+     * @param user 条件和更新的值
+     * @return      更新成功返回true
+     */
+    boolean update2(User user);
+
+    /**
+     * 根据条件查询单条数据
+     *
+     * @param username  用户名
+     * @return          用户数据
+     */
+    User getByUsername(String username);
+
+    /**
+     * 根据条件查询数据
+     *
+     * @param user      查询条件
+     * @return          用户数据
+     */
+    List<User> getByUser(User user);
 }
