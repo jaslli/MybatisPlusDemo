@@ -168,4 +168,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         );
     }
 
+    @Override
+    public List<User> getByUserNames(List<String> userNames) {
+        return baseMapper.listByUserNames(userNames);
+    }
+
 }

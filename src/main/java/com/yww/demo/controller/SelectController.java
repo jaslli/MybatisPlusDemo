@@ -1,5 +1,8 @@
 package com.yww.demo.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yww.demo.entity.User;
 import com.yww.demo.service.IUserService;
 import com.yww.demo.util.Result;
@@ -52,6 +55,30 @@ public class SelectController {
     @GetMapping("/getByIds")
     public Result<?> getByUser(@RequestBody List<String> userIds) {
         return Result.success(service.listByIds(userIds));
+    }
+
+    @Operation(summary = "根据用户名批量查询")
+    @GetMapping("/getByUserNames")
+    public Result<?> getByUserNames(@RequestBody List<String> userNames) {
+        return Result.success(service.getByUserNames(userNames));
+    }
+
+    @Operation(summary = "简单分页查询")
+    @GetMapping("/page/{current}/{size}")
+    public Result<?> page(@PathVariable Integer current,
+                          @PathVariable Integer size) {
+        Page<User> ipage = Page.of(current, size);
+        return Result.success(service.page(ipage));
+    }
+
+    @Operation(summary = "根据条件分页查询（查询性别）")
+    @GetMapping("/page/{current}/{size}/{sex}")
+    public Result<?> page(@PathVariable Integer current,
+                          @PathVariable Integer size,
+                          @PathVariable Boolean sex) {
+        Page<User> ipage = Page.of(current, size);
+        LambdaQueryWrapper<User> wrapper = Wrappers.lambdaQuery(User.builder().sex(sex).build());
+        return Result.success(service.page(ipage, wrapper));
     }
 
 }

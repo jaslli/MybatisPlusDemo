@@ -2,6 +2,7 @@ package com.yww.demo.util;
 
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yww.demo.entity.User;
 import com.yww.demo.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -49,10 +50,8 @@ public class TestController {
 
     @Test
     public void test() {
-        userService.update(
-                Wrappers.lambdaUpdate(User.class).eq(User::getNickname, "端木健雄")
-                        .set(User::getStatus, false)
-        );
+        Page<User> iPage = Page.of(1, 10);
+        System.out.println(userService.page(iPage));
     }
 
 }

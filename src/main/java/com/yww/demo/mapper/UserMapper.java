@@ -25,6 +25,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @param batchList 实体列表
      * @return 影响行数
      */
+    @SuppressWarnings("all")
     int insertBatchSomeColumn(@Param("list") List<User> batchList);
 
     /**
@@ -34,4 +35,13 @@ public interface UserMapper extends BaseMapper<User> {
      * @return 影响行数
      */
     int deleteBatchByUsernames(@Param("usernames") List<String> usernames);
+
+    /**
+     * 批量根据用户名批量删除
+     *
+     * @param usernames 用户名列表
+     * @return 查询到的用户列表
+     */
+    List<User> listByUserNames(@Param("usernames") List<String> usernames);
+
 }
