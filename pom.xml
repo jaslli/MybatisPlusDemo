@@ -16,6 +16,8 @@
         <spring-boot-starter-web.version>2.7.5</spring-boot-starter-web.version>
         <mysql.version>8.0.32</mysql.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
+        <mybatis-plus-generator.version>3.5.3.1</mybatis-plus-generator.version>
+        <velocity.version>2.3</velocity.version>
         <springdoc.version>1.6.14</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
         <lombok.version>1.18.26</lombok.version>
@@ -45,6 +47,18 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis-plus.version}</version>
+        </dependency>
+        <!--  代码生成器  -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>${mybatis-plus-generator.version}</version>
+        </dependency>
+        <!--  velocity模板引擎  -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>${velocity.version}</version>
         </dependency>
         <!--  springdoc-openapi  -->
         <dependency>

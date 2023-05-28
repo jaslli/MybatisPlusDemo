@@ -49,10 +49,10 @@ public class TestController {
 
     @Test
     public void test() {
-        userService.update(
-                Wrappers.lambdaUpdate(User.class).eq(User::getNickname, "端木健雄")
-                        .set(User::getStatus, false)
+        userService.list(
+                Wrappers.lambdaQuery(User.class).last("ORDER BY TO_NUMBER(ID)")
         );
     }
+
 
 }

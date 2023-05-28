@@ -11,10 +11,10 @@ import java.util.Random;
 
 /**
  * <p>
- *
+ *      用户测试工具类
  * </p>
  *
- * @author chenhao
+ * @author yww
  * @since 2023/2/23 9:11
  */
 public class UserUtil {

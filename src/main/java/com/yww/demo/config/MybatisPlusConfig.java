@@ -14,12 +14,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * Mybatis-Plus配置类
  * </p>
  *
- * @ClassName MybatisPlusConfig
- * @Author yww
- * @Date 2022/10/12 20:57
+ * @author  yww
+ * @since  2022/10/12 20:57
  */
 @Configuration
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 @MapperScan("com.yww.demo.mapper")
 public class MybatisPlusConfig {
 

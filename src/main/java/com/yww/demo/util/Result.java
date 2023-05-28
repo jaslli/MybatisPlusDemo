@@ -26,6 +26,11 @@ public class Result<T> {
     private String message;
 
     /**
+     * 是否成功
+     */
+    private Boolean isSuccess = true;
+
+    /**
      * 返回数据
      */
     private T data;
@@ -118,6 +123,12 @@ public class Result<T> {
      */
     public static <T> Result<T> failure(Integer code, String message, T date) {
         return new Result<>(code, message, date);
+    }
+
+    public static <T> Result<T> failure(Boolean isSuccess) {
+        Result<T> result = new Result<>();
+        result.setIsSuccess(false);
+        return result;
     }
 
 }

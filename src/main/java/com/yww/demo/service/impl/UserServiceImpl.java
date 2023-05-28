@@ -1,4 +1,4 @@
-package com.yww.demo.service;
+package com.yww.demo.service.impl;
 
 
 import cn.hutool.core.collection.ListUtil;
@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yww.demo.entity.User;
 import com.yww.demo.mapper.UserMapper;
+import com.yww.demo.service.IUserService;
 import com.yww.demo.util.UserUtil;
 import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
