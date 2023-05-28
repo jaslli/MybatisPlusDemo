@@ -126,4 +126,12 @@ public interface IUserService extends IService<User> {
      * @return          用户数据
      */
     List<User> getByUser(User user);
+
+    /**
+     * 根据用户名批量查询数据
+     *
+     * @param userNames     用户名列表
+     * @return              用户数据
+     */
+    List<User> getByUserNames(List<String> userNames);
 }

@@ -9,4 +9,11 @@
         </foreach>
     </delete>
 
+    <select id="listByUserNames" resultType="com.yww.demo.entity.User">
+        SELECT * FROM user WHERE username IN
+        <foreach collection="usernames" index="index" item="username" separator="," open="(" close=")" >
+            #{username}
+        </foreach>
+    </select>
+
 </mapper>
